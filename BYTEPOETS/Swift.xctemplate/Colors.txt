@@ -1,0 +1,4 @@
+Primary: #0099da
+PrimaryLight: #7FCCEC
+PrimaryDark: #005da4
+LightGray: #747474

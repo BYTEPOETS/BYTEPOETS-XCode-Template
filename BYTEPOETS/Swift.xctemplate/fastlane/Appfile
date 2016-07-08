@@ -1,0 +1,7 @@
+app_identifier "___VARIABLE_bundleIdentifier___" # The bundle identifier of your app
+apple_id "___VARIABLE_appleid___" # Your Apple email address
+
+team_id "___VARIABLE_teamid___"  # Developer Portal Team ID
+
+# you can even provide different app identifiers, Apple IDs and team names per lane:
+# More information: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Appfile.md

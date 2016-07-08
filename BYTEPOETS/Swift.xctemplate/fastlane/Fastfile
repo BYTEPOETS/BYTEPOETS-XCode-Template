@@ -1,0 +1,84 @@
+# Customise this file, documentation can be found here:
+# https://github.com/KrauseFx/fastlane/tree/master/docs
+# All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# By default, fastlane will send which actions are used
+# No personal data is shared, more information on https://github.com/fastlane/enhancer
+# Uncomment the following line to opt out
+# opt_out_usage
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "1.41.1"
+
+default_platform :ios
+
+platform :ios do
+
+  before_all do
+    clear_derived_data
+
+    xcode_select "___VARIABLE_xcodepath___"
+
+    git_version = sh("git describe --abbrev=0")
+    build_number = Time.now.strftime("%F%R")
+
+    increment_build_number(
+      build_number: build_number.gsub(/[^a-zA-Z0-9]/, '').strip.to_i
+    )
+
+    increment_version_number(
+      version_number: git_version.scan(/[0-9]\.[0-9]\.[0-9]/).first.strip
+    )
+
+    cocoapods
+  end
+
+  desc "Just build"
+  lane :test do
+
+    # uncomment this line, this will run all tests
+    #scan( configuration: "Debug", scheme: "___PROJECTNAME___", device: "iPhone 6 9.3", workspace: "___PROJECTNAME___.xcworkspace")
+
+  end
+
+  desc "Submit to Apple TestFlight"
+  lane :build do
+    unlock_keychain(
+      path: "login",
+      password: ENV["KEYCHAIN_PASSWORD"]
+    )
+
+    cert(
+      team_id: "___VARIABLE_teamid___"
+    )
+
+    sigh
+
+    update_project_provisioning(
+      xcodeproj: "___PROJECTNAME___.xcodeproj",
+      target_filter: "___PROJECTNAME___", # matches name or type of a target
+      build_configuration: "Release"
+    )
+
+    # use the UDID of the newly created provisioning profile
+    ENV["PROFILE_UDID"] = lane_context[SharedValues::SIGH_UDID]
+
+    gym(scheme: "___PROJECTNAME___", clean: true) # Build your app - more options available
+  end
+
+  desc "Submit to Apple TestFlight"
+  lane :appstore do
+    ENV["DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS"] = "-t DAV"
+    pilot(
+      skip_waiting_for_build_processing: true
+    )
+  end
+end

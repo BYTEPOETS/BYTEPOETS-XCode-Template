@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Kind</key>
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+	<key>Identifier</key>
+	<string>com.bytepoets.dt.unit.singleViewApplication</string>
+	<key>Ancestors</key>
+	<array>
+		<string>com.apple.dt.unit.storyboardApplication</string>
+		<string>com.apple.dt.unit.coreDataCocoaTouchApplication</string>
+	</array>
+	<key>Concrete</key>
+	<true/>
+	<key>Description</key>
+	<string>Basic project template including SwiftLint, SwiftGen, Fastlane and CocoaPods</string>
+	<key>SortOrder</key>
+	<integer>1</integer>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Identifier</key>
+            <string>languageChoice</string>
+			<key>Units</key>
+			<dict>
+				<key>Objective-C</key>
+				<dict>
+					<key>Nodes</key>
+					<array>
+						<string>MainViewController.h:comments</string>
+						<string>MainViewController.h:imports:importCocoa</string>
+						<string>MainViewController.h:interface(___FILEBASENAME___ : UIViewController)</string>
+						<string>MainViewController.m:comments</string>
+						<string>MainViewController.m:imports:importHeader:MainViewController.h</string>
+						<string>MainViewController.m:extension</string>
+						<string>MainViewController.m:implementation:methods:viewDidLoad(- (void\)viewDidLoad)</string>
+						<string>MainViewController.m:implementation:methods:viewDidLoad:super</string>
+						<string>MainViewController.m:implementation:methods:didReceiveMemoryWarning(- (void\)didReceiveMemoryWarning)</string>
+						<string>MainViewController.m:implementation:methods:didReceiveMemoryWarning:super</string>
+					</array>
+				</dict>
+				<key>Swift</key>
+				<dict>
+					<key>Nodes</key>
+					<array>
+						<string>MainViewController.swift:comments</string>
+						<string>MainViewController.swift:imports:importCocoa</string>
+						<string>MainViewController.swift:implementation(___FILEBASENAME___: UIViewController)</string>
+						<string>MainViewController.swift:implementation:methods:viewDidLoad(override func viewDidLoad(\))</string>
+						<string>MainViewController.swift:implementation:methods:viewDidLoad:super</string>
+						<string>MainViewController.swift:implementation:methods:didReceiveMemoryWarning(override func didReceiveMemoryWarning(\))</string>
+						<string>MainViewController.swift:implementation:methods:didReceiveMemoryWarning:super</string>
+						<string>AppDelegate.swift</string>
+						<string>AppInfo.swift</string>
+						<string>AppTheme.swift</string>
+						<string>Assets.swift</string>
+						<string>Colors.swift</string>
+						<string>Colors.txt</string>
+						<string>Localizable.swift</string>
+						<string>Storyboards.swift</string>
+						<string>.swiftlint.yml</string>
+						<string>../.gitignore</string>
+						<string>Localizable.strings</string>
+						<string>../fastlane</string>
+						<string>../Podfile</string>
+					</array>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>appleid</string>
+			<key>Description</key>
+			<string>Apple ID</string>
+			<key>Name</key>
+			<string>Apple ID:</string>
+			<key>Type</key>
+			<string>text</string>
+			<key>Default</key>
+			<string></string>
+			<key>Required</key>
+			<true />
+			<key>NotPersisted</key>
+			<true />
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>teamid</string>
+			<key>Description</key>
+			<string>iTunes Team ID</string>
+			<key>Name</key>
+			<string>iTunes Team ID:</string>
+			<key>Type</key>
+			<string>text</string>
+			<key>Default</key>
+			<string></string>
+			<key>Required</key>
+			<true />
+			<key>NotPersisted</key>
+			<true />
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>xcodepath</string>
+			<key>Description</key>
+			<string>Path to XCode</string>
+			<key>Name</key>
+			<string>Path to XCode:</string>
+			<key>Type</key>
+			<string>text</string>
+			<key>Default</key>
+			<string>/Applications/Xcode.app</string>
+			<key>Required</key>
+			<true />
+			<key>NotPersisted</key>
+			<true />
+		</dict>
+	</array>
+	<key>Targets</key>
+	<array>
+		<dict>
+			<key>BuildPhases</key>
+			<array>
+				<dict>
+					<key>Class</key>
+					<string>ShellScript</string>
+					<key>ShellPath</key>
+					<string>/bin/sh</string>
+					<key>ShellScript</key>
+					<string>&quot;${PODS_ROOT}/SwiftGen/bin/swiftgen&quot; strings $PROJECT_DIR/$PROJECT_NAME/Base.lproj/Localizable.strings &gt; $PROJECT_DIR/$PROJECT_NAME/Localizable.swift
+&quot;${PODS_ROOT}/SwiftGen/bin/swiftgen&quot; colors $PROJECT_DIR/$PROJECT_NAME/Colors.txt &gt; $PROJECT_DIR/$PROJECT_NAME/Colors.swift
+&quot;${PODS_ROOT}/SwiftGen/bin/swiftgen&quot; images $PROJECT_DIR/$PROJECT_NAME/ &gt; $PROJECT_DIR/$PROJECT_NAME/Assets.swift
+&quot;${PODS_ROOT}/SwiftGen/bin/swiftgen&quot; storyboards $PROJECT_DIR/$PROJECT_NAME &gt; $PROJECT_DIR/$PROJECT_NAME/Storyboards.swift</string>
+					<key>Name</key>
+					<string>SwiftGen</string>
+					<key>Indent</key>
+					<integer>0</integer>
+				</dict>
+				<dict>
+					<key>Class</key>
+					<string>ShellScript</string>
+					<key>ShellPath</key>
+					<string>/bin/sh</string>
+					<key>ShellScript</key>
+					<string>if which swiftlint &gt;/dev/null; then
+    cd $PROJECT_DIR/$PROJECT_NAME
+    swiftlint
+    else
+        echo &quot;warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint&quot;
+fi</string>
+					<key>Name</key>
+					<string>SwiftLint</string>
+					<key>Indent</key>
+					<integer>0</integer>
+				</dict>
+			</array>
+		</dict>
+	</array>
+	<key>Definitions</key>
+	<dict>
+		<key>Base.lproj/Main.storyboard</key>
+		<dict>
+			<key>Path</key>
+			<string>Main.storyboard</string>
+			<key>Group</key>
+			<array>
+				<string>Views</string>
+				<string>Main</string>
+			</array>
+			<key>SortOrder</key>
+			<integer>1</integer>
+		</dict>
+		<key>MainViewController.swift</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Controller</string>
+				<string>Main</string>
+			</array>
+		</dict>
+		<key>AppDelegate.swift</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Application</string>
+			</array>
+			<key>Path</key>
+			<string>AppDelegate.swift</string>
+		</dict>
+		<key>AppInfo.swift</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Application</string>
+			</array>
+			<key>Path</key>
+			<string>AppInfo.swift</string>
+		</dict>
+		<key>AppTheme.swift</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Application</string>
+			</array>
+			<key>Path</key>
+			<string>AppTheme.swift</string>
+		</dict>
+		<key>Assets.swift</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Constants</string>
+			</array>
+			<key>Path</key>
+			<string>Assets.swift</string>
+		</dict>
+		<key>Colors.swift</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Constants</string>
+			</array>
+			<key>Path</key>
+			<string>Colors.swift</string>
+		</dict>
+		<key>Colors.txt</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Supporting Files</string>
+			</array>
+			<key>Path</key>
+			<string>Colors.txt</string>
+		</dict>
+		<key>Localizable.swift</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Localizable</string>
+			</array>
+			<key>Path</key>
+			<string>Localizable.swift</string>
+		</dict>
+		<key>Localizable.strings</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Localizable</string>
+			</array>
+		</dict>
+		<key>Storyboards.swift</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Constants</string>
+			</array>
+			<key>Path</key>
+			<string>Storyboards.swift</string>
+		</dict>
+		<key>../SwiftGen</key>
+		<dict>
+			<key>Path</key>
+			<string>SwiftGen</string>
+			<key>Group</key>
+			<string>External Tools</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>.swiftlint.yml</key>
+		<dict>
+			<key>Path</key>
+			<string>.swiftlint.yml</string>
+			<key>Group</key>
+			<string>External Tools</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>../fastlane</key>
+		<dict>
+			<key>Path</key>
+			<string>fastlane</string>
+			<key>Group</key>
+			<string>External Tools</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>../Podfile</key>
+		<dict>
+			<key>Path</key>
+			<string>Podfile</string>
+			<key>Group</key>
+			<string>External Tools</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>../.gitignore</key>
+		<dict>
+			<key>Path</key>
+			<string>.gitignore</string>
+			<key>Group</key>
+			<string>External Tools</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+	</dict>
+</dict>
+</plist>
