@@ -1,0 +1,23 @@
+### Exclude 3rd Party files
+excluded:
+
+### Exclude SwiftGen generated files
+  - Assets.swift
+  - Colors.swift
+  - Localizable.swift
+  - Storyboards.swift
+
+### GENERIC RULES - DO NOT CHANGE
+disabled_rules:
+  - trailing_whitespace
+  - nesting
+variable_name:
+  min_length:
+    - 2
+    - 1
+type_name:
+  min_length:
+    - 2
+    - 1
+line_length:
+  - 220
